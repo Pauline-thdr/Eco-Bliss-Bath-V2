@@ -18,6 +18,6 @@ describe('Test fonctionnel - Connexion', () => {
         cy.get('[data-cy="login-submit"]').click()
 
         // Vérification de "Mon panier" une fois connecté
-        
+        cy.get('[data-cy="nav-link-cart"]').should('be.visible')
     })
 })
