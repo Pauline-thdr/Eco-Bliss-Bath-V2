@@ -36,6 +36,7 @@
 //   }
 // }
 
+// Commande de login :
 Cypress.Commands.add('login', (email, password)=>{
     // Accès à la page de connexion
     cy.visit('/#/login')
@@ -50,3 +51,21 @@ Cypress.Commands.add('login', (email, password)=>{
     // On attend que la connexion soit traitée (le bouton doit disparaître ou l'URL changer)
     cy.url().should('not.include', 'login')
 })
+
+// Commande d'ajout d'un produit au panier :
+Cypress.Commands.add('addProductToCart', (productId, quantity, token) => {
+  cy.request({
+    method: "PUT",
+    url: "http://localhost:8081/orders/add",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: {
+      product: productId,
+      quantity: quantity,
+    },
+  }).then((response) => {
+    // On s'assure que l'ajout a fonctionné avant de continuer les tests
+    expect(response.status).to.eq(200);
+  });
+});
