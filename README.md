@@ -15,6 +15,8 @@
 Pour démarrer cet applicatif web vous devez avoir les outils suivants:
 - Docker
 - NodeJs
+- npm
+- Git
 
 # Installation et démarrage
 Clonez le projet pour le récupérer
@@ -37,4 +39,47 @@ npm i
 ou
 npm install (si vous préférez)
 ```
-
+# Installation de Cypress 
+Depuis le dossier frontend 
+```
+npm install --save-dev cypress
+```
+# Exécution des tests 
+En mode intéractif (avec interface graphique visuelle)
+```
+npx cypress open
+```
+Puis :
+- Choisir E2E Testing
+- Sélectionner un navigateur
+- Lancer les fichiers de test
+```
+En mode headless (avec ligne de commande)
+```
+npx cypress run
+```
+Ce mode permet d’exécuter tous les tests automatiquement.
+```
+# Génération d’un rapport de test
+Installer le reporter Mochawesome :
+```
+npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
+```
+Configurer cypress.config.js :
+```
+reporter: 'mochawesome',
+reporterOptions: {
+  reportDir: 'cypress/reports',
+  overwrite: false,
+  html: true,
+  json: true
+}
+```
+Lancer ensuite :
+```
+npx cypress run
+```
+Les rapports seront disponibles dans :
+```
+frontend/cypress/reports
+```

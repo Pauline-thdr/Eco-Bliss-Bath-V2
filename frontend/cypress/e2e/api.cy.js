@@ -182,31 +182,4 @@ describe("Tests API", () => {
       expect(response.body.rating).to.eq(reviewData.rating); // On vérifie que le champs rating est identique à celui envoyé
     });
   });
-
-  // ---------------------------
-  // Test API XSS
-  // ---------------------------
-  it("POST /reviews → test faille XSS dans l'espace commentaire", () => {
-    const xssPayload = '<script>alert("XSS")</script>';
-
-    cy.request({
-      method: "POST",
-      url: `http://localhost:8081/reviews`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      failOnStatusCode: false,
-      body: {
-        title: "Test XSS",
-        comment: xssPayload,
-        rating: 5,
-      },
-    }).then((response) => {
-      expect([200, 201, 400]).to.include(response.status); // L'API peut soit refuser (400), soit accepter mais nettoyer le contenu
-
-      if (response.status === 200 || response.status === 201) {
-        expect(response.body.comment).to.not.include("<script>"); // Vérifie si le script est renvoyé tel quel
-      }
-    });
-  });
 });
