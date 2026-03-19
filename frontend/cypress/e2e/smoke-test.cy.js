@@ -37,11 +37,7 @@ describe("Smoke tests - Ajout au panier", () => {
 // Test faille XSS
 it("should not contain XSS vulnerability in review form", () => {
   // Connexion utilisateur
-  cy.visit("http://localhost:4200/login");
-
-  cy.get('[data-cy="login-username"]').type("test@test.fr");
-  cy.get('[data-cy="login-password"]').type("testtest");
-  cy.get('[data-cy="login-submit"]').click();
+  cy.login("test2@test.fr", "testtest");
 
   // Accès à une fiche produit
   cy.visit("http://localhost:4200/products/1");
